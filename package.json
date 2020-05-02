@@ -1,0 +1,10 @@
+{
+    "name": "welcome-bot",
+    "version": "1.0.0",
+    "description": "Automate role assignment",
+    "main": "bot.js",
+    "author": "Steven Yu",
+    "dependencies": {
+        "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6"
+    }
+}
