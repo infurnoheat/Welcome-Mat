@@ -27,7 +27,7 @@ bot.on('message' , msg => {
             switch(name){
                 case 'dpt':
                     msg.channel.send('Welcome to DPT');
-                    msg.author.addRole(msg.guild.roles.cache.find(role => role.name === 'DPT'));
+                    msg.member.roles.add(message.guild.roles.cache.find(role => role.name.toLowerCase() == args[0].toLowerCase()))
                     break;
                 default:
                     msg.channel.send('Sorry, but we do not have that corp');
@@ -35,7 +35,7 @@ bot.on('message' , msg => {
             }
             break;
         case 'help':
-            msg.channel.send('!corp [corpname]');
+            msg.channel.send('!corp [corpname] --- Join a corp!');
             break;
         default:
             msg.channel.send('Sorry, we do not have that command. View the list of commands with !help');
