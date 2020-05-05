@@ -1,6 +1,7 @@
 var Discord = require('discord.js');
 var auth = require('./auth.json');
 var bot = new Discord.Client();
+var corplist = ['DPT' , 'Domicile'];
 
 // Initialize Discord Bot
 bot.once('ready', () => {
@@ -19,23 +20,25 @@ bot.on('message' , msg => {
     }
     var args = msg.content.slice(1).split(' ');
     var cmd = args[0].toLowerCase();
-    if(args.length > 1){
-        var name = args[1].toLowerCase();
-    }
     switch(cmd){
         case 'corp':
-            switch(name){
-                case 'dpt':
-                    msg.channel.send('Welcome to DPT');
-                    msg.member.roles.add(message.guild.roles.cache.find(role => role.name.toLowerCase() == args[0].toLowerCase()))
-                    break;
-                default:
-                    msg.channel.send('Sorry, but we do not have that corp');
-                    break;
+            var corpname = args[1].toLowerCase();
+            var name;
+            for(i = 2; i < args.length; i++){
+                name += args[i] + ' ';
+            }
+            for(i = 0; i < corplist.length; i++){
+                if(corpname = corplist[i]){
+                    msg.channel.send('Welcome to ' + corpname);
+                    msg.member.roles.add(msg.guild.roles.cache.find(role => role.name.toLowerCase() == name.toLowerCase()))
+                    msg.member.setNickname(msg.member.user.username + '- ' + name);
+                } else if(i = conplist.length - 1){
+                    msg.channel.send('Sorry, that corp is not part of the family.');
+                }
             }
             break;
         case 'help':
-            msg.channel.send('!corp [corpname] --- Join a corp!');
+            msg.channel.send('!corp [corpname] [gamename] --- Join a corp!');
             break;
         default:
             msg.channel.send('Sorry, we do not have that command. View the list of commands with !help');
