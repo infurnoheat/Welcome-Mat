@@ -5,8 +5,7 @@
   "main": "bot.js",
   "author": "Steven Yu",
   "dependencies": {
-    "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
-    "winston": "^3.2.1"
+    "discord.js": "^12.2.0"
   },
   "devDependencies": {},
   "scripts": {

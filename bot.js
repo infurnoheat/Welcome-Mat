@@ -1,57 +1,44 @@
-var Discord = require('discord.io');
-var logger = require('winston');
+var Discord = require('discord.js');
 var auth = require('./auth.json');
-
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
-});
-logger.level = 'debug';
+var bot = new Discord.Client();
 
 // Initialize Discord Bot
-var bot = new Discord.Client({
-   token: auth.token,
-   autorun: true
+bot.once('ready', () => {
+	console.log('Ready!');
 });
 
-bot.on('ready', function (evt) {
-    logger.info('Connected');
-    logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
-});
+bot.login(auth.token);
 
 //On member entrance, send msg: Not working
-bot.on('guildMemberAdd', function (user, userID, channelID, message, evt) {
-    bot.sendMessage({
-        to: channelID,
-        message: 'Welcome, ' + user +  ', to the Ontario Dynasty family. What corps are you from? (!corp [corpname])'
-    });
-});
+
 
 //Role assignment: WIP
-bot.on('message', function (user, userID, channelID, message, evt) {
-    if(message.substring(0, 1) == '!') {
-        var args = message.substring(1).split(' ');
-        var cmd = args[0];
-        args = args.splice(1);
-        switch(cmd) {
-            case 'corp':
-                if(args[0] == ('DPT')){
-                    bot.editNickname({
-                        userID: userID,
-                        nick: user + '-' + args[0]
-                    });
-                    bot.sendMessage({
-                        to: channelID,
-                        message: 'Welcome to the DPT!'
-                    });
-                    bot.addToRole({
-                        userID: userID,
-                        roleID: '&707061297191321610'
-                    });
-                }
+bot.on('message' , msg => {
+    if(!msg.content.startsWith('!') || msg.author.bot){
+        return;
+    }
+    var args = msg.content.slice(1).split(' ');
+    var cmd = args[0].toLowerCase();
+    if(args.length > 1){
+        var name = args[1].toLowerCase();
+    }
+    switch(cmd){
+        case 'corp':
+            switch(name){
+                case 'dpt':
+                    msg.channel.send('Welcome to DPT');
+                    msg.author.addRole(msg.guild.roles.cache.find(role => role.name === 'DPT'));
+                    break;
+                default:
+                    msg.channel.send('Sorry, but we do not have that corp');
+                    break;
+            }
             break;
-         }
-     }
-});
+        case 'help':
+            msg.channel.send('!corp [corpname]');
+            break;
+        default:
+            msg.channel.send('Sorry, we do not have that command. View the list of commands with !help');
+            break;
+    }
+})
