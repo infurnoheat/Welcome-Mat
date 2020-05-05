@@ -21,24 +21,36 @@ bot.on('ready', function (evt) {
     logger.info(bot.username + ' - (' + bot.id + ')');
 });
 
+//On member entrance, send msg: Not working
+bot.on('guildMemberAdd', function (user, userID, channelID, message, evt) {
+    bot.sendMessage({
+        to: channelID,
+        message: 'Welcome, ' + user +  ', to the Ontario Dynasty family. What corps are you from? (!corp [corpname])'
+    });
+});
+
+//Role assignment: WIP
 bot.on('message', function (user, userID, channelID, message, evt) {
     if(message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
-        bot.sendMessage({
-            to: channelID,
-            message: 'Welcome to the Family ' + user
-        });
         args = args.splice(1);
         switch(cmd) {
-            case 'role':
-                if(args[1] == ('DPT')){
-                    bot.editNickname(userID, user + '-DPT');
+            case 'corp':
+                if(args[0] == ('DPT')){
+                    bot.editNickname({
+                        userID: userID,
+                        nick: user + '-' + args[0]
+                    });
+                    bot.sendMessage({
+                        to: channelID,
+                        message: 'Welcome to the DPT!'
+                    });
+                    bot.addToRole({
+                        userID: userID,
+                        roleID: '&707061297191321610'
+                    });
                 }
-                bot.sendMessage({
-                    to: channelID,
-                    message: 'Welcome to the Family'
-                });
             break;
          }
      }
