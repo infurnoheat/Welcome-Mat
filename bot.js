@@ -25,16 +25,14 @@ bot.on('message' , msg => {
     switch(cmd){
         case 'corp':
             var corpname = args[1];
-            var name ='';
+            var name = '';
             name = args.slice(2).join(' ');
-            if(name == ''){
-                return msg.channel.send('Please use the format !corp [corp name] [game username]');
-            }
+            if(name == '') return msg.channel.send('Please use the format !corp [corp name] [game username]');
             for(i = 0; i < corplist.length; i++){
                 if(corpname == corplist[i]){
                     msg.channel.send('Welcome to ' + corpname + ', ' + name);
                     msg.member.roles.add(msg.guild.roles.cache.find(role => role.name.toLowerCase() == corpname.toLowerCase()))
-                    msg.member.setNickname(name + '- ' + corpname);
+                    msg.member.setNickname(name + ' - ' + corpname);
                     break;
                 } else if(i == corplist.length - 1){
                     msg.channel.send('Sorry, that corp is not part of the family.');
@@ -44,6 +42,17 @@ bot.on('message' , msg => {
         case 'help':
             msg.channel.send('!corp [corpname] [in game username] --- Join a corp!');
             break;
+        case 'execute':
+            var order = '';
+            order = args.slice(1).join(' ');
+            if(name == ' ') return msg.channel.send('Please give an order.');
+            switch(order){
+                case 'order 66':
+                    msg.member.setNickname('Jedi Scum');
+                    msg.channel.send('*pew* **BANG** ***ARGHGHGH*** We killed the <@' + msg.member.id + '>!');
+                    break;
+            }
+        break;
         default:
             msg.channel.send('Sorry, we do not have that command. View the list of commands with !help');
             break;
