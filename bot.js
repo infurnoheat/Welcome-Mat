@@ -22,22 +22,24 @@ bot.on('ready', function (evt) {
 });
 
 bot.on('message', function (user, userID, channelID, message, evt) {
-    // Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with `!`
-    if (message.substring(0, 1) == '!') {
+    if(message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
-       
+        bot.sendMessage({
+            to: channelID,
+            message: 'Welcome to the Family ' + user
+        });
         args = args.splice(1);
         switch(cmd) {
-            // !ping
-            case 'ping':
+            case 'role':
+                if(args[1] == ('DPT')){
+                    bot.editNickname(userID, user + '-DPT');
+                }
                 bot.sendMessage({
                     to: channelID,
-                    message: 'Pong!'
+                    message: 'Welcome to the Family'
                 });
             break;
-            // Just add any case commands if you want to..
          }
      }
 });
