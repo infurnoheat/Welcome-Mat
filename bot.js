@@ -13,7 +13,7 @@ bot.login(auth.token);
 //On member entrance
 bot.on('guildMemberAdd' , member => {
     bot.channel.find('name' , 'general').send('Welcome to the Family. What corp are you from? (Use !corp [corp name] [game username]');
-})
+});
 
 //Role assignment and Name Change
 bot.on('message' , msg => {
