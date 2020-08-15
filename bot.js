@@ -1,7 +1,6 @@
 var Discord = require('discord.js');
 var auth = require('./auth.json');
 var bot = new Discord.Client();
-var corplist = ['DPT' , 'Domicile' , 'Bloodtide' , 'Dynasty' , 'space-bar' , 'Beer' , 'Meadow' , 'District' , 'Dominion' , 'TradeSys' , 'Destiny' , 'TradePub' , 'Simply-Chaos' , 'helloWorld' , 'Diligent' , 'Kith', 'PPU' , 'Wayfarers'];
 
 // Initialize Discord Bot
 bot.once('ready', () => {
@@ -12,11 +11,12 @@ bot.login(auth.token);
 
 //On member entrance
 bot.on('guildMemberAdd' , member => {
-    var welcome = member.guild.channels.cache.get('706052898836054038');
-    welcome.send('Welcome to the Family. What corp are you from? (Use !corp [corpname] [in game username])');
+    var welcome = member.guild.channels.cache.get('743269687751868521');
+    welcome.send('Welcome! PLease list the games you play. Please use !play [full game name] except for PUBG');
+    member.roles.add(msg.guild.roles.cache.find(role => role.name.toLowerCase() == 'gamers'));
 });
 
-//Role assignment and Name Change
+//Commands
 bot.on('message' , msg => {
     if(!msg.content.startsWith('!') || msg.author.bot){
         return;
@@ -24,25 +24,20 @@ bot.on('message' , msg => {
     var args = msg.content.slice(1).split(' ');
     var cmd = args[0].toLowerCase();
     switch(cmd){
-        case 'corp':
-            var corpname = args[1];
-            var name = '';
-            name = args.slice(2).join(' ');
-            if(name == '') return msg.channel.send('Please use the format !corp [corp name] [game username]');
-            for(i = 0; i < corplist.length; i++){
-                if(corpname == corplist[i]){
-                    msg.channel.send('Welcome to ' + corpname + ', ' + name);
-                    msg.member.roles.add(msg.guild.roles.cache.find(role => role.name.toLowerCase() == corpname.toLowerCase()))
-                    msg.member.setNickname(name + ' - ' + corplist[i]);
+        case 'play':
+            //msg.channel.send('play');
+            var game = args.slice(1).join('');
+            if(msg.guild.roles.cache.find(role => role.name.toLowerCase() == game.toLowerCase())){
+                if(game == 'admin'){
+                    msg.channel.send('You can\'t give yourself admin powers!');
                     break;
-                } else if(i == corplist.length - 1){
-                    msg.channel.send('Sorry, that corp is not part of the family.');
                 }
+                msg.channel.send('You now play ' + msg.guild.roles.cache.find(role => role.name.toLowerCase() == game.toLowerCase()).name);
+                msg.member.roles.add(msg.guild.roles.cache.find(role => role.name.toLowerCase() == game.toLowerCase()));
+                break;
+            } else {
+                msg.channel.send('We don\'t have that game.');
             }
-            break;
-        case 'help':
-            msg.channel.send('!corp [corpname] [in game username] --- Join a corp!');
-            msg.channel.send('There may be some easter egg commands. Go find them');
             break;
         case 'execute':
             var order = '';
@@ -54,7 +49,11 @@ bot.on('message' , msg => {
                     msg.channel.send('*pew* **BANG** ***ARGHGHGH*** We killed the <@' + msg.member.id + '>!');
                     break;
             }
-        break;
+            break;
+        case 'help':
+            msg.channel.send('!play [full game name] except for PUBG --- Adds a game you play to your username');
+            msg.channel.send('There may be some easter egg commands. Go find them');
+            break;
         default:
             msg.channel.send('Sorry, we do not have that command. View the list of commands with !help');
             break;
