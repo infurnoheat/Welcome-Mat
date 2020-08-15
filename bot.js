@@ -7,7 +7,8 @@ bot.once('ready', () => {
 	console.log('Ready!');
 });
 
-bot.login(auth.token);
+bot.login(process.env.BOT_TOKEN);
+//bot.login(auth.token);
 
 //On member entrance
 bot.on('guildMemberAdd' , member => {
