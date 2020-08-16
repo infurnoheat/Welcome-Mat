@@ -1,5 +1,4 @@
 var Discord = require('discord.js');
-var auth = require('./auth.json');
 var bot = new Discord.Client();
 
 // Initialize Discord Bot
