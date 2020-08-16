@@ -6,7 +6,8 @@
   "author": "Steven Yu",
   "dependencies": {
     "discord.js": "^12.2.0",
-    "request": "*"
+    "request": "*",
+    "websocket": "1.0.31"
   },
   "devDependencies": {},
   "scripts": {
