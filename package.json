@@ -7,12 +7,18 @@
   "dependencies": {
     "discord.js": "^12.2.0",
     "request": "*",
+    "serve": "^11.3.2",
     "websocket": "1.0.31"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node bot.js"
-  },
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
+    },
   "repository": {
     "type": "git",
     "url": "\u001b[A\u001b[D\u001b[B"
