@@ -54,7 +54,7 @@ bot.on('message' , msg => {
             msg.channel.send('There may be some easter egg commands. Go find them');
             break;
         default:
-            msg.channel.send('Sorry, we do not have that command. View the list of commands with !help');
+            msg.channel.send('Sorry, we don\'t have that command. View the list of commands with !help');
             break;
     }
 });
