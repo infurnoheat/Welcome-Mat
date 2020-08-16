@@ -41,7 +41,7 @@ bot.on('message' , msg => {
         case 'execute':
             var order = '';
             order = args.slice(1).join(' ');
-            if(order == ' ') return msg.channel.send('Please give an order.');
+            if(order == '') return msg.channel.send('Please give an order.');
             switch(order){
                 case 'order 66':
                     msg.member.setNickname('Jedi Scum');
