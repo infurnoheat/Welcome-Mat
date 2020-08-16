@@ -1,1 +1,1 @@
-web: node bot.js --server.port=$PORT
+worker: node bot.js --server.port=$PORT
